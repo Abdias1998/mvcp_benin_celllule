@@ -1,0 +1,15 @@
+import { Model } from 'mongoose';
+import { User, UserDocument } from './schemas/user.schema';
+import { PastorData } from '../shared/types';
+export declare class UsersService {
+    private userModel;
+    constructor(userModel: Model<UserDocument>);
+    findByEmail(email: string): Promise<UserDocument | null>;
+    findById(id: string): Promise<UserDocument | null>;
+    create(createPastorDto: PastorData): Promise<UserDocument>;
+    getPendingPastors(): Promise<User[]>;
+    getPastors(): Promise<User[]>;
+    approvePastor(id: string): Promise<User>;
+    update(id: string, updatePastorDto: Partial<PastorData>): Promise<User>;
+    delete(id: string): Promise<any>;
+}
