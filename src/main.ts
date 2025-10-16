@@ -8,7 +8,7 @@ async function bootstrap() {
   // Enable CORS to allow the frontend to communicate with the backend
   // app.enableCors();
   app.enableCors({
-  origin: ['http://localhost:3000'],
+  origin: ['http://localhost:3000','https://mvcp-cdm.netlify.app/'],
   credentials: true,
 });
 
