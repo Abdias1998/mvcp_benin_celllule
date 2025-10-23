@@ -41,6 +41,7 @@ let DistrictsController = class DistrictsController {
 exports.DistrictsController = DistrictsController;
 __decorate([
     (0, common_1.Post)(),
+    (0, roles_decorator_1.Roles)(types_1.UserRole.NATIONAL_COORDINATOR),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_district_dto_1.CreateDistrictDto]),
@@ -54,6 +55,7 @@ __decorate([
 ], DistrictsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, roles_decorator_1.Roles)(types_1.UserRole.NATIONAL_COORDINATOR),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -62,6 +64,7 @@ __decorate([
 ], DistrictsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, roles_decorator_1.Roles)(types_1.UserRole.NATIONAL_COORDINATOR),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -69,7 +72,6 @@ __decorate([
 ], DistrictsController.prototype, "remove", null);
 exports.DistrictsController = DistrictsController = __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(types_1.UserRole.NATIONAL_COORDINATOR),
     (0, common_1.Controller)('districts'),
     __metadata("design:paramtypes", [districts_service_1.DistrictsService])
 ], DistrictsController);

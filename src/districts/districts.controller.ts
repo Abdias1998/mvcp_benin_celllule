@@ -8,12 +8,12 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { UserRole } from 'src/shared/types';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(UserRole.NATIONAL_COORDINATOR)
 @Controller('districts')
 export class DistrictsController {
   constructor(private readonly districtsService: DistrictsService) {}
 
   @Post()
+  @Roles(UserRole.NATIONAL_COORDINATOR)
   create(@Body() createDistrictDto: CreateDistrictDto) {
     return this.districtsService.create(createDistrictDto);
   }
@@ -24,11 +24,13 @@ export class DistrictsController {
   }
 
   @Patch(':id')
+  @Roles(UserRole.NATIONAL_COORDINATOR)
   update(@Param('id') id: string, @Body() updateDistrictDto: UpdateDistrictDto) {
     return this.districtsService.update(id, updateDistrictDto);
   }
 
   @Delete(':id')
+  @Roles(UserRole.NATIONAL_COORDINATOR)
   remove(@Param('id') id: string) {
     return this.districtsService.remove(id);
   }
