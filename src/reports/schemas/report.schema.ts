@@ -45,7 +45,6 @@ export class Report {
   @Prop({ required: true }) region: string;
   @Prop({ required: true }) group: string;
   @Prop({ required: true }) district: string;
-  @Prop({ required: true }) cellName: string;
   @Prop({ required: true }) cellCategory: string;
   @Prop({ required: true }) leaderName: string;
   @Prop() leaderContact: string;

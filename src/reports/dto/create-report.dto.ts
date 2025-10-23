@@ -23,7 +23,7 @@ export class CreateReportDto {
   @IsString() @IsNotEmpty() region: string;
   @IsString() @IsNotEmpty() group: string;
   @IsString() @IsNotEmpty() district: string;
-  @IsString() @IsNotEmpty() cellName: string;
+
   @IsString() @IsNotEmpty() cellCategory: string;
   @IsString() @IsNotEmpty() leaderName: string;
   @IsString() @IsNotEmpty() leaderContact: string;

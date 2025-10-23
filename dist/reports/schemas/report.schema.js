@@ -96,10 +96,6 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Report.prototype, "cellName", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
 ], Report.prototype, "cellCategory", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),

@@ -182,7 +182,7 @@ let SeederService = SeederService_1 = class SeederService {
                 const totalPresent = attendees + invitedPeopleCount;
                 const report = {
                     cellDate: reportDate.toISOString().split('T')[0], region: cell.region, group: cell.group, district: cell.district,
-                    cellName: cell.cellName, cellCategory: cell.cellCategory, leaderName: cell.leaderName, leaderContact: cell.leaderContact,
+                    cellCategory: cell.cellCategory, leaderName: cell.leaderName, leaderContact: cell.leaderContact,
                     registeredMen, registeredWomen, registeredChildren, attendees, absentees, invitedPeople, totalPresent,
                     visitSchedule: "Visites prévues mardi et jeudi.", visitsMade, bibleStudy: Math.floor(Math.random() * totalPresent),
                     miracleHour: Math.floor(Math.random() * totalPresent), sundayServiceAttendance: Math.floor(Math.random() * totalPresent),
