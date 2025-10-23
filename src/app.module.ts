@@ -1,23 +1,29 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { CellsModule } from './cells/cells.module';
 import { GroupsModule } from './groups/groups.module';
 import { DistrictsModule } from './districts/districts.module';
-// import { EventsModule } from './events/events.module';
-// import { ResourcesModule } from './resources/resources.module';
-// import { CommunicationsModule } from './communications/communications.module';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
+    // --- Serve Frontend Build ---
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'), // Dossier contenant ton frontend buildé
+    }),
+
     // --- Configuration ---
     ConfigModule.forRoot({
-      isGlobal: true, // Make ConfigService available globally
+      isGlobal: true,
     }),
+
     // --- Database ---
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -26,7 +32,7 @@ import { DatabaseModule } from './database/database.module';
       }),
       inject: [ConfigService],
     }),
-    
+
     // --- Feature Modules ---
     AuthModule,
     UsersModule,
@@ -34,9 +40,6 @@ import { DatabaseModule } from './database/database.module';
     CellsModule,
     GroupsModule,
     DistrictsModule,
-    // EventsModule,
-    // ResourcesModule,
-    // CommunicationsModule,
     DatabaseModule,
   ],
   controllers: [],
