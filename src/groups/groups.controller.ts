@@ -7,12 +7,12 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { UserRole } from 'src/shared/types';
 
-@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('groups')
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.NATIONAL_COORDINATOR)
   create(@Body() createGroupDto: CreateGroupDto) {
     return this.groupsService.create(createGroupDto);
@@ -24,12 +24,14 @@ export class GroupsController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.NATIONAL_COORDINATOR)
   update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
     return this.groupsService.update(id, updateGroupDto);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.NATIONAL_COORDINATOR)
   remove(@Param('id') id: string) {
     return this.groupsService.remove(id);

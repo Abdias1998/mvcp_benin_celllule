@@ -6,7 +6,7 @@ export class CreateCellDto {
   @IsString() @IsNotEmpty() region: string;
   @IsString() @IsNotEmpty() group: string;
   @IsString() @IsNotEmpty() district: string;
-  @IsString() @IsNotEmpty() cellName: string;
+  @IsOptional() @IsString() cellName?: string;
   @IsString() @IsNotEmpty() @IsEnum(CELL_CATEGORIES) cellCategory: string;
   @IsString() @IsNotEmpty() leaderName: string;
   @IsOptional() @IsString() @Matches(/^01[0-9]{8}$/) leaderContact?: string;

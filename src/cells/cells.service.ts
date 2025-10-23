@@ -15,7 +15,12 @@ export class CellsService {
     return createdCell.save();
   }
 
-  async findAllForUser(user: User): Promise<Cell[]> {
+  async findAllForUser(user: User | null): Promise<Cell[]> {
+    // If no user is provided, return all cells (public access)
+    if (!user) {
+      return this.cellModel.find({}).exec();
+    }
+
     const query: any = {};
     switch (user.role) {
       case UserRole.REGIONAL_PASTOR:
