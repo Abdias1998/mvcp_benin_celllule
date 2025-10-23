@@ -27,6 +27,9 @@ let CellsService = class CellsService {
         return createdCell.save();
     }
     async findAllForUser(user) {
+        if (!user) {
+            return this.cellModel.find({}).exec();
+        }
         const query = {};
         switch (user.role) {
             case types_1.UserRole.REGIONAL_PASTOR:

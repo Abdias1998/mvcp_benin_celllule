@@ -41,6 +41,7 @@ let GroupsController = class GroupsController {
 exports.GroupsController = GroupsController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(types_1.UserRole.NATIONAL_COORDINATOR),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -56,6 +57,7 @@ __decorate([
 ], GroupsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(types_1.UserRole.NATIONAL_COORDINATOR),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -65,6 +67,7 @@ __decorate([
 ], GroupsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(types_1.UserRole.NATIONAL_COORDINATOR),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -72,7 +75,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], GroupsController.prototype, "remove", null);
 exports.GroupsController = GroupsController = __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, common_1.Controller)('groups'),
     __metadata("design:paramtypes", [groups_service_1.GroupsService])
 ], GroupsController);

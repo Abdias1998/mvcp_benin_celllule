@@ -7,7 +7,7 @@ export declare class CellsService {
     private cellModel;
     constructor(cellModel: Model<CellDocument>);
     create(createCellDto: CreateCellDto): Promise<Cell>;
-    findAllForUser(user: User): Promise<Cell[]>;
+    findAllForUser(user: User | null): Promise<Cell[]>;
     update(id: string, updateCellDto: UpdateCellDto): Promise<Cell>;
     remove(id: string): Promise<any>;
 }

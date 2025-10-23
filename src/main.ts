@@ -11,6 +11,7 @@ async function bootstrap() {
   origin: ['https://mvcp-cdm.netlify.app','http://localhost:3000'],
   credentials: true,
 });
+console.log('✅ MONGO_URI =', process.env.MONGO_URI);
 
 
   // Use a global pipe to automatically validate incoming request bodies

@@ -19,17 +19,18 @@ const cells_module_1 = require("./cells/cells.module");
 const groups_module_1 = require("./groups/groups.module");
 const districts_module_1 = require("./districts/districts.module");
 const database_module_1 = require("./database/database.module");
+const test_controller_1 = require("./test/test.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            serve_static_1.ServeStaticModule.forRoot({
-                rootPath: (0, path_1.join)(__dirname, '..', 'public'),
-            }),
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
+            }),
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: (0, path_1.join)(__dirname, '..', 'public'),
             }),
             mongoose_1.MongooseModule.forRootAsync({
                 imports: [config_1.ConfigModule],
@@ -46,7 +47,7 @@ exports.AppModule = AppModule = __decorate([
             districts_module_1.DistrictsModule,
             database_module_1.DatabaseModule,
         ],
-        controllers: [],
+        controllers: [test_controller_1.TestController],
         providers: [],
     })
 ], AppModule);

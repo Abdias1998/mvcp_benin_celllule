@@ -11,17 +11,18 @@ import { CellsModule } from './cells/cells.module';
 import { GroupsModule } from './groups/groups.module';
 import { DistrictsModule } from './districts/districts.module';
 import { DatabaseModule } from './database/database.module';
+import { TestController } from './test/test.controller';
 
 @Module({
   imports: [
-    // --- Serve Frontend Build ---
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'), // Dossier contenant ton frontend buildé
-    }),
-
-    // --- Configuration ---
+    // --- Configuration d'abord ---
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+
+    // --- Serve Frontend Build ---
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
     }),
 
     // --- Database ---
@@ -42,7 +43,7 @@ import { DatabaseModule } from './database/database.module';
     DistrictsModule,
     DatabaseModule,
   ],
-  controllers: [],
+  controllers: [TestController],
   providers: [],
 })
 export class AppModule {}

@@ -9,6 +9,7 @@ async function bootstrap() {
         origin: ['https://mvcp-cdm.netlify.app', 'http://localhost:3000'],
         credentials: true,
     });
+    console.log('✅ MONGO_URI =', process.env.MONGO_URI);
     app.useGlobalPipes(new common_1.ValidationPipe());
     const port = process.env.PORT || 3000;
     await app.listen(port);
