@@ -6,7 +6,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Enable CORS to allow the frontend to communicate with the backend
-  app.enableCors();
+  // app.enableCors();
+  app.enableCors({
+  origin: ['https://mvcp-cdm.netlify.app','http://localhost:3000'],
+  credentials: true,
+});
+
 
   // Use a global pipe to automatically validate incoming request bodies
   app.useGlobalPipes(new ValidationPipe());
