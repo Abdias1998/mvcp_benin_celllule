@@ -68,12 +68,6 @@ let UsersService = class UsersService {
     }
     async getUsersByHierarchy(currentUser) {
         const query = { status: 'approved' };
-        console.log('🔍 getUsersByHierarchy - Current User:', {
-            role: currentUser.role,
-            region: currentUser.region,
-            group: currentUser.group,
-            district: currentUser.district
-        });
         if (currentUser.role === types_1.UserRole.GROUP_PASTOR) {
             query.$or = [
                 {
@@ -97,13 +91,7 @@ let UsersService = class UsersService {
         else {
             return [];
         }
-        console.log('🔍 Query:', JSON.stringify(query, null, 2));
-        const results = await this.userModel.find(query).select('-password').exec();
-        console.log(`🔍 Found ${results.length} users`);
-        results.forEach(u => {
-            console.log(`  - ${u.name} (${u.role}) - Region: ${u.region}, Group: ${u.group}, District: ${u.district}`);
-        });
-        return results;
+        return this.userModel.find(query).select('-password').exec();
     }
 };
 exports.UsersService = UsersService;
