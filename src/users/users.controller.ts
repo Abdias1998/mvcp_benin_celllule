@@ -40,8 +40,12 @@ export class UsersController {
     return this.usersService.getPastors();
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.NATIONAL_COORDINATOR)
+  @UseGuards(JwtAuthGuard)
+  @Get('hierarchy')
+  getHierarchy(@Request() req) {
+    return this.usersService.getUsersByHierarchy(req.user);
+  }
+
   @Patch(':id/approve')
   approve(@Param('id') id: string) {
     return this.usersService.approvePastor(id);

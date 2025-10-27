@@ -69,13 +69,6 @@ export class UsersService {
   async getUsersByHierarchy(currentUser: UserDocument): Promise<User[]> {
     const query: any = { status: 'approved' };
 
-    console.log('🔍 getUsersByHierarchy - Current User:', {
-      role: currentUser.role,
-      region: currentUser.region,
-      group: currentUser.group,
-      district: currentUser.district
-    });
-
     // Pasteur de Groupe : voit tous les pasteurs de district + responsables de cellule de son groupe
     if (currentUser.role === UserRole.GROUP_PASTOR) {
       query.$or = [
@@ -105,15 +98,6 @@ export class UsersService {
       return [];
     }
 
-    console.log('🔍 Query:', JSON.stringify(query, null, 2));
-
-    const results = await this.userModel.find(query).select('-password').exec();
-    
-    console.log(`🔍 Found ${results.length} users`);
-    results.forEach(u => {
-      console.log(`  - ${u.name} (${u.role}) - Region: ${u.region}, Group: ${u.group}, District: ${u.district}`);
-    });
-
-    return results;
+    return this.userModel.find(query).select('-password').exec();
   }
 }
