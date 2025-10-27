@@ -41,6 +41,12 @@ export class User {
   @Prop()
   district?: string;
 
+  @Prop() // Pour les responsables de cellule
+  cellName?: string;
+
+  @Prop() // Pour les responsables de cellule
+  cellCategory?: string;
+
   @Prop({ default: 'pending' })
   status?: 'pending' | 'approved';
 
@@ -49,6 +55,9 @@ export class User {
   
   @Prop({ unique: true, sparse: true })
   contact?: string;
+
+  @Prop({ unique: true, sparse: true }) // Identifiant de 5 chiffres pour les responsables de cellule
+  identifier?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
