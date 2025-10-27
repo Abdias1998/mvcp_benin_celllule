@@ -14,4 +14,5 @@ export declare class UsersService {
     approvePastor(id: string): Promise<User>;
     update(id: string, updatePastorDto: Partial<PastorData>): Promise<User>;
     delete(id: string): Promise<any>;
+    getUsersByHierarchy(currentUser: UserDocument): Promise<User[]>;
 }

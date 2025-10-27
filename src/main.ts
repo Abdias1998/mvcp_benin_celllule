@@ -16,7 +16,7 @@ console.log('✅ MONGO_URI =', process.env.MONGO_URI);
 
   // Use a global pipe to automatically validate incoming request bodies
   app.useGlobalPipes(new ValidationPipe());
-  const port = process.env.PORT || 3000; // Render attribue le port dynamiquement
+  const port = process.env.PORT || 4000; // Render attribue le port dynamiquement
   await app.listen(port);
   console.log(`🚀 Server running on port ${port}`);
 }

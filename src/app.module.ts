@@ -11,7 +11,8 @@ import { CellsModule } from './cells/cells.module';
 import { GroupsModule } from './groups/groups.module';
 import { DistrictsModule } from './districts/districts.module';
 import { DatabaseModule } from './database/database.module';
-import { TestController } from './test/test.controller';
+import { CellLeadersModule } from './cell-leaders/cell-leaders.module';
+import { TestController } from './test/test.controller'; 
 
 @Module({
   imports: [
@@ -22,16 +23,16 @@ import { TestController } from './test/test.controller';
 
     // --- Serve Frontend Build ---
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(__dirname, '..', 'public'),  
     }),
-
+  
     // --- Database ---
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: async (configService: ConfigService) => ({ 
         uri: configService.get<string>('MONGO_URI'),
       }),
-      inject: [ConfigService],
+      inject: [ConfigService], 
     }),
 
     // --- Feature Modules ---
@@ -42,6 +43,7 @@ import { TestController } from './test/test.controller';
     GroupsModule,
     DistrictsModule,
     DatabaseModule,
+    CellLeadersModule,
   ],
   controllers: [TestController],
   providers: [],

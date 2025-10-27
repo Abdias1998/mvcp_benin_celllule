@@ -62,9 +62,12 @@ let AuthService = class AuthService {
                 throw new common_1.ConflictException('Un utilisateur avec ce numéro de téléphone existe déjà.');
             }
         }
-        await this.usersService.create({
+        const userData = {
             ...registerDto,
-        });
+            email: registerDto.email && registerDto.email.trim() !== '' ? registerDto.email : undefined,
+            contact: registerDto.contact && registerDto.contact.trim() !== '' ? registerDto.contact : undefined,
+        };
+        await this.usersService.create(userData);
         return { success: true, message: "Inscription réussie. Votre compte est en attente d'approbation." };
     }
 };

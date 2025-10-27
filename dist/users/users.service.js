@@ -66,6 +66,45 @@ let UsersService = class UsersService {
     async delete(id) {
         return this.userModel.findByIdAndDelete(id).exec();
     }
+    async getUsersByHierarchy(currentUser) {
+        const query = { status: 'approved' };
+        console.log('🔍 getUsersByHierarchy - Current User:', {
+            role: currentUser.role,
+            region: currentUser.region,
+            group: currentUser.group,
+            district: currentUser.district
+        });
+        if (currentUser.role === types_1.UserRole.GROUP_PASTOR) {
+            query.$or = [
+                {
+                    role: types_1.UserRole.DISTRICT_PASTOR,
+                    region: currentUser.region,
+                    group: currentUser.group
+                },
+                {
+                    role: types_1.UserRole.CELL_LEADER,
+                    region: currentUser.region,
+                    group: currentUser.group
+                }
+            ];
+        }
+        else if (currentUser.role === types_1.UserRole.DISTRICT_PASTOR) {
+            query.role = types_1.UserRole.CELL_LEADER;
+            query.region = currentUser.region;
+            query.group = currentUser.group;
+            query.district = currentUser.district;
+        }
+        else {
+            return [];
+        }
+        console.log('🔍 Query:', JSON.stringify(query, null, 2));
+        const results = await this.userModel.find(query).select('-password').exec();
+        console.log(`🔍 Found ${results.length} users`);
+        results.forEach(u => {
+            console.log(`  - ${u.name} (${u.role}) - Region: ${u.region}, Group: ${u.group}, District: ${u.district}`);
+        });
+        return results;
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([

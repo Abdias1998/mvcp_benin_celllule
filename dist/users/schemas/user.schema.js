@@ -44,6 +44,14 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "district", void 0);
 __decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], User.prototype, "cellName", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], User.prototype, "cellCategory", void 0);
+__decorate([
     (0, mongoose_1.Prop)({ default: 'pending' }),
     __metadata("design:type", String)
 ], User.prototype, "status", void 0);
@@ -55,6 +63,10 @@ __decorate([
     (0, mongoose_1.Prop)({ unique: true, sparse: true }),
     __metadata("design:type", String)
 ], User.prototype, "contact", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ unique: true, sparse: true }),
+    __metadata("design:type", String)
+], User.prototype, "identifier", void 0);
 exports.User = User = __decorate([
     (0, mongoose_1.Schema)({
         timestamps: true,

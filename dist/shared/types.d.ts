@@ -58,7 +58,8 @@ export declare enum UserRole {
     NATIONAL_COORDINATOR = "national_coordinator",
     REGIONAL_PASTOR = "regional_pastor",
     GROUP_PASTOR = "group_pastor",
-    DISTRICT_PASTOR = "district_pastor"
+    DISTRICT_PASTOR = "district_pastor",
+    CELL_LEADER = "cell_leader"
 }
 export interface User {
     uid: string;
@@ -68,9 +69,12 @@ export interface User {
     region?: string;
     group?: string;
     district?: string;
+    cellName?: string;
+    cellCategory?: string;
     status?: 'pending' | 'approved';
     password?: string;
     contact?: string;
+    identifier?: string;
 }
 export interface PastorData {
     uid?: string;

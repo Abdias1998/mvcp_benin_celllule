@@ -4,8 +4,8 @@ import { UpdateCellDto } from './dto/update-cell.dto';
 export declare class CellsController {
     private readonly cellsService;
     constructor(cellsService: CellsService);
-    create(createCellDto: CreateCellDto): Promise<import("./schemas/cell.schema").Cell>;
-    findAllForUser(req: any): Promise<import("./schemas/cell.schema").Cell[]>;
+    create(createCellDto: CreateCellDto): Promise<any>;
+    findAllForUser(req: any): Promise<any[]>;
     update(id: string, updateCellDto: UpdateCellDto): Promise<import("./schemas/cell.schema").Cell>;
     remove(id: string): Promise<any>;
 }

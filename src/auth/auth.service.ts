@@ -67,9 +67,14 @@ export class AuthService {
     }
 
     // The user schema now has a default value for `status`, so we don't need to set it here.
-    await this.usersService.create({
+    // Convertir les chaînes vides en undefined pour éviter les problèmes d'index unique
+    const userData = {
       ...registerDto,
-    });
+      email: registerDto.email && registerDto.email.trim() !== '' ? registerDto.email : undefined,
+      contact: registerDto.contact && registerDto.contact.trim() !== '' ? registerDto.contact : undefined,
+    };
+
+    await this.usersService.create(userData);
 
     return { success: true, message: "Inscription réussie. Votre compte est en attente d'approbation." };
   }

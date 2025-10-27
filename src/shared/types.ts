@@ -68,6 +68,7 @@ export enum UserRole {
     REGIONAL_PASTOR = 'regional_pastor',
     GROUP_PASTOR = 'group_pastor',
     DISTRICT_PASTOR = 'district_pastor',
+    CELL_LEADER = 'cell_leader', // Responsable de cellule
 }
 
 export interface User {
@@ -78,9 +79,12 @@ export interface User {
   region?: string;
   group?: string;
   district?: string;
+  cellName?: string; // Pour les responsables de cellule
+  cellCategory?: string; // Pour les responsables de cellule
   status?: 'pending' | 'approved';
   password?: string;
   contact?: string;
+  identifier?: string; // Identifiant de 5 chiffres pour les responsables de cellule
 }
 
 export interface PastorData {

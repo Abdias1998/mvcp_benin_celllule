@@ -6,26 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CellsModule = void 0;
+exports.CellLeadersModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const cells_service_1 = require("./cells.service");
-const cells_controller_1 = require("./cells.controller");
-const cell_schema_1 = require("./schemas/cell.schema");
+const cell_leaders_controller_1 = require("./cell-leaders.controller");
+const cell_leaders_service_1 = require("./cell-leaders.service");
 const user_schema_1 = require("../users/schemas/user.schema");
-let CellsModule = class CellsModule {
+let CellLeadersModule = class CellLeadersModule {
 };
-exports.CellsModule = CellsModule;
-exports.CellsModule = CellsModule = __decorate([
+exports.CellLeadersModule = CellLeadersModule;
+exports.CellLeadersModule = CellLeadersModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([
-                { name: cell_schema_1.Cell.name, schema: cell_schema_1.CellSchema },
-                { name: user_schema_1.User.name, schema: user_schema_1.UserSchema }
-            ]),
+            mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }])
         ],
-        controllers: [cells_controller_1.CellsController],
-        providers: [cells_service_1.CellsService],
+        controllers: [cell_leaders_controller_1.CellLeadersController],
+        providers: [cell_leaders_service_1.CellLeadersService],
     })
-], CellsModule);
-//# sourceMappingURL=cells.module.js.map
+], CellLeadersModule);
+//# sourceMappingURL=cell-leaders.module.js.map
