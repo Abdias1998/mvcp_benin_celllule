@@ -23,8 +23,8 @@ export class User {
   @Prop()
   uid: string; // This is a virtual property, but we define it for type safety
 
-  @Prop({ required: true, unique: true, lowercase: true })
-  email: string;
+  @Prop({ unique: true, sparse: true, lowercase: true })
+  email?: string;
 
   @Prop({ required: true })
   name: string;
@@ -47,7 +47,7 @@ export class User {
   @Prop({ required: true })
   password?: string;
   
-  @Prop()
+  @Prop({ unique: true, sparse: true })
   contact?: string;
 }
 

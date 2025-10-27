@@ -72,7 +72,7 @@ export enum UserRole {
 
 export interface User {
   uid: string;
-  email: string;
+  email?: string;
   name: string;
   role: UserRole;
   region?: string;
@@ -85,7 +85,7 @@ export interface User {
 
 export interface PastorData {
     uid?: string;
-    email: string;
+    email?: string;
     name: string;
     role: UserRole;
     region?: string;

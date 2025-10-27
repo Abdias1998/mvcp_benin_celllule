@@ -5,6 +5,8 @@ export declare class UsersService {
     private userModel;
     constructor(userModel: Model<UserDocument>);
     findByEmail(email: string): Promise<UserDocument | null>;
+    findByContact(contact: string): Promise<UserDocument | null>;
+    findByEmailOrContact(identifier: string): Promise<UserDocument | null>;
     findById(id: string): Promise<UserDocument | null>;
     create(createPastorDto: PastorData): Promise<UserDocument>;
     getPendingPastors(): Promise<User[]>;

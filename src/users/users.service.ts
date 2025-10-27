@@ -13,6 +13,19 @@ export class UsersService {
     return this.userModel.findOne({ email: email.toLowerCase() }).exec();
   }
 
+  async findByContact(contact: string): Promise<UserDocument | null> {
+    return this.userModel.findOne({ contact }).exec();
+  }
+
+  async findByEmailOrContact(identifier: string): Promise<UserDocument | null> {
+    // Vérifier si l'identifiant ressemble à un email (contient @)
+    if (identifier.includes('@')) {
+      return this.findByEmail(identifier);
+    }
+    // Sinon, c'est un numéro de téléphone
+    return this.findByContact(identifier);
+  }
+
   async findById(id: string): Promise<UserDocument | null> {
     return this.userModel.findById(id).exec();
   }

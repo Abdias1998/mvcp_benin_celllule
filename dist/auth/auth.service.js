@@ -19,8 +19,8 @@ let AuthService = class AuthService {
         this.usersService = usersService;
         this.jwtService = jwtService;
     }
-    async validateUser(email, pass) {
-        const user = await this.usersService.findByEmail(email);
+    async validateUser(identifier, pass) {
+        const user = await this.usersService.findByEmailOrContact(identifier);
         if (user && (await bcrypt.compare(pass, user.password))) {
             const { password, ...result } = user.toObject();
             return result;
@@ -28,23 +28,39 @@ let AuthService = class AuthService {
         return null;
     }
     async login(loginDto) {
-        const user = await this.validateUser(loginDto.email, loginDto.password);
+        const user = await this.validateUser(loginDto.identifier, loginDto.password);
         if (!user) {
-            throw new common_1.UnauthorizedException('Email ou mot de passe incorrect.');
+            throw new common_1.UnauthorizedException('Email/Téléphone ou mot de passe incorrect.');
         }
         if (user.status !== 'approved') {
             throw new common_1.UnauthorizedException("Votre compte est en attente d'approbation.");
         }
-        const payload = { email: user.email, sub: user._id.toString(), role: user.role };
+        const payload = {
+            email: user.email,
+            contact: user.contact,
+            sub: user._id.toString(),
+            role: user.role
+        };
         return {
             access_token: this.jwtService.sign(payload),
             user,
         };
     }
     async register(registerDto) {
-        const existingUser = await this.usersService.findByEmail(registerDto.email);
-        if (existingUser) {
-            throw new common_1.ConflictException('Un utilisateur avec cet email existe déjà.');
+        if (!registerDto.email && !registerDto.contact) {
+            throw new common_1.ConflictException('Vous devez fournir au moins un email ou un numéro de téléphone.');
+        }
+        if (registerDto.email) {
+            const existingUserByEmail = await this.usersService.findByEmail(registerDto.email);
+            if (existingUserByEmail) {
+                throw new common_1.ConflictException('Un utilisateur avec cet email existe déjà.');
+            }
+        }
+        if (registerDto.contact) {
+            const existingUserByContact = await this.usersService.findByContact(registerDto.contact);
+            if (existingUserByContact) {
+                throw new common_1.ConflictException('Un utilisateur avec ce numéro de téléphone existe déjà.');
+            }
         }
         await this.usersService.create({
             ...registerDto,

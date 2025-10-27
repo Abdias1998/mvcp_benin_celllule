@@ -3,7 +3,7 @@ import { UserRole } from '../../shared/types';
 export type UserDocument = User & Document;
 export declare class User {
     uid: string;
-    email: string;
+    email?: string;
     name: string;
     role: UserRole;
     region?: string;

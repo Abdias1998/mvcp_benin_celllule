@@ -26,6 +26,15 @@ let UsersService = class UsersService {
     async findByEmail(email) {
         return this.userModel.findOne({ email: email.toLowerCase() }).exec();
     }
+    async findByContact(contact) {
+        return this.userModel.findOne({ contact }).exec();
+    }
+    async findByEmailOrContact(identifier) {
+        if (identifier.includes('@')) {
+            return this.findByEmail(identifier);
+        }
+        return this.findByContact(identifier);
+    }
     async findById(id) {
         return this.userModel.findById(id).exec();
     }

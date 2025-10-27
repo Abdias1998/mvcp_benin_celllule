@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegisterDto = void 0;
 const class_validator_1 = require("class-validator");
 const types_1 = require("../../shared/types");
+const at_least_one_validator_1 = require("../validators/at-least-one.validator");
 class RegisterDto {
 }
 exports.RegisterDto = RegisterDto;
@@ -21,8 +22,10 @@ __decorate([
     __metadata("design:type", String)
 ], RegisterDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.ValidateIf)((o) => !o.contact || o.email),
+    (0, class_validator_1.IsEmail)({}, { message: 'Email invalide.' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, at_least_one_validator_1.AtLeastOne)(['email', 'contact'], { message: 'Vous devez fournir au moins un email ou un numéro de téléphone.' }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "email", void 0);
 __decorate([
@@ -32,9 +35,10 @@ __decorate([
     __metadata("design:type", String)
 ], RegisterDto.prototype, "password", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.ValidateIf)((o) => !o.email || o.contact),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.Matches)(/^01[0-9]{8}$/, { message: 'Le numéro doit contenir 10 chiffres et commencer par 01.' }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "contact", void 0);
 __decorate([
