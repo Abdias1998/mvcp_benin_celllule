@@ -40,11 +40,11 @@ export class UsersController {
     return this.usersService.getPastors();
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('hierarchy')
-  getHierarchy(@Request() req) {
-    return this.usersService.getUsersByHierarchy(req.user);
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Get('hierarchy')
+  // getHierarchy(@Request() req) {
+  //   return this.usersService.getUsersByHierarchy(req.user);
+  // }
 
   @Patch(':id/approve')
   approve(@Param('id') id: string) {
