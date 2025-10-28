@@ -15,6 +15,7 @@ export class CellsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAllForUser(@Request() req) {
     const user = req.user || null;
     return this.cellsService.findAllForUser(user);

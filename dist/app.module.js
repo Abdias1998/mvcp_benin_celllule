@@ -19,6 +19,7 @@ const cells_module_1 = require("./cells/cells.module");
 const groups_module_1 = require("./groups/groups.module");
 const districts_module_1 = require("./districts/districts.module");
 const database_module_1 = require("./database/database.module");
+const cell_leaders_module_1 = require("./cell-leaders/cell-leaders.module");
 const test_controller_1 = require("./test/test.controller");
 let AppModule = class AppModule {
 };
@@ -46,6 +47,7 @@ exports.AppModule = AppModule = __decorate([
             groups_module_1.GroupsModule,
             districts_module_1.DistrictsModule,
             database_module_1.DatabaseModule,
+            cell_leaders_module_1.CellLeadersModule,
         ],
         controllers: [test_controller_1.TestController],
         providers: [],

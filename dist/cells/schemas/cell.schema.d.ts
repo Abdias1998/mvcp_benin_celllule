@@ -11,6 +11,7 @@ export declare class Cell {
     leaderName: string;
     leaderContact?: string;
     status: CellStatus;
+    initialMembersCount?: number;
 }
 export declare const CellSchema: import("mongoose").Schema<Cell, import("mongoose").Model<Cell, any, any, any, Document<unknown, any, Cell, any, {}> & Cell & {
     _id: import("mongoose").Types.ObjectId;

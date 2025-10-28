@@ -14,4 +14,8 @@ export declare class UsersService {
     approvePastor(id: string): Promise<User>;
     update(id: string, updatePastorDto: Partial<PastorData>): Promise<User>;
     delete(id: string): Promise<any>;
+    getUsersByHierarchy(currentUser: UserDocument): Promise<User[]>;
+    updateResetToken(userId: string, token: string, expires: Date): Promise<void>;
+    findByResetToken(token: string): Promise<UserDocument | null>;
+    updatePassword(userId: string, hashedPassword: string): Promise<void>;
 }

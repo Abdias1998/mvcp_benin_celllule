@@ -11,7 +11,7 @@ async function bootstrap() {
     });
     console.log('✅ MONGO_URI =', process.env.MONGO_URI);
     app.useGlobalPipes(new common_1.ValidationPipe());
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 4000;
     await app.listen(port);
     console.log(`🚀 Server running on port ${port}`);
 }

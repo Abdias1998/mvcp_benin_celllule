@@ -26,6 +26,7 @@ export class Cell {
   @Prop({ required: true }) leaderName: string;
   @Prop() leaderContact?: string;
   @Prop({ required: true }) status: CellStatus;
+  @Prop() initialMembersCount?: number; // Nombre de personnes inscrites à l'ouverture de la cellule
 }
 
 export const CellSchema = SchemaFactory.createForClass(Cell);

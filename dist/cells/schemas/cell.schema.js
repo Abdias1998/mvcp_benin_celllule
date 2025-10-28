@@ -50,6 +50,10 @@ __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Cell.prototype, "status", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Number)
+], Cell.prototype, "initialMembersCount", void 0);
 exports.Cell = Cell = __decorate([
     (0, mongoose_1.Schema)({
         timestamps: true,

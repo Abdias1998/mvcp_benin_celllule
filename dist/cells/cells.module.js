@@ -12,13 +12,17 @@ const mongoose_1 = require("@nestjs/mongoose");
 const cells_service_1 = require("./cells.service");
 const cells_controller_1 = require("./cells.controller");
 const cell_schema_1 = require("./schemas/cell.schema");
+const user_schema_1 = require("../users/schemas/user.schema");
 let CellsModule = class CellsModule {
 };
 exports.CellsModule = CellsModule;
 exports.CellsModule = CellsModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: cell_schema_1.Cell.name, schema: cell_schema_1.CellSchema }]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: cell_schema_1.Cell.name, schema: cell_schema_1.CellSchema },
+                { name: user_schema_1.User.name, schema: user_schema_1.UserSchema }
+            ]),
         ],
         controllers: [cells_controller_1.CellsController],
         providers: [cells_service_1.CellsService],
