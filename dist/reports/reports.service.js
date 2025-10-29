@@ -49,6 +49,13 @@ let ReportsService = class ReportsService {
                 query.group = user.group;
                 query.district = user.district;
                 break;
+            case types_1.UserRole.CELL_LEADER:
+                query.region = user.region;
+                query.group = user.group;
+                query.district = user.district;
+                query.cellName = user.cellName;
+                query.cellCategory = user.cellCategory;
+                break;
             case types_1.UserRole.NATIONAL_COORDINATOR:
             default:
                 break;

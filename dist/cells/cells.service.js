@@ -76,6 +76,13 @@ let CellsService = class CellsService {
                     query.group = user.group;
                     query.district = user.district;
                     break;
+                case types_1.UserRole.CELL_LEADER:
+                    query.region = user.region;
+                    query.group = user.group;
+                    query.district = user.district;
+                    query.cellName = user.cellName;
+                    query.cellCategory = user.cellCategory;
+                    break;
             }
         }
         const cells = await this.cellModel.find(query).exec();

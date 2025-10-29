@@ -79,6 +79,14 @@ export class CellsService {
           query.group = user.group;
           query.district = user.district;
           break;
+        case UserRole.CELL_LEADER:
+          // Le responsable de cellule ne voit que sa propre cellule
+          query.region = user.region;
+          query.group = user.group;
+          query.district = user.district;
+          query.cellName = user.cellName;
+          query.cellCategory = user.cellCategory;
+          break;
       }
     }
 

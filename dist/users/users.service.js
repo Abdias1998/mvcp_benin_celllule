@@ -74,7 +74,23 @@ let UsersService = class UsersService {
             group: currentUser.group,
             district: currentUser.district
         });
-        if (currentUser.role === types_1.UserRole.GROUP_PASTOR) {
+        if (currentUser.role === types_1.UserRole.REGIONAL_PASTOR) {
+            query.$or = [
+                {
+                    role: types_1.UserRole.GROUP_PASTOR,
+                    region: currentUser.region
+                },
+                {
+                    role: types_1.UserRole.DISTRICT_PASTOR,
+                    region: currentUser.region
+                },
+                {
+                    role: types_1.UserRole.CELL_LEADER,
+                    region: currentUser.region
+                }
+            ];
+        }
+        else if (currentUser.role === types_1.UserRole.GROUP_PASTOR) {
             query.$or = [
                 {
                     role: types_1.UserRole.DISTRICT_PASTOR,

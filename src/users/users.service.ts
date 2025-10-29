@@ -76,8 +76,28 @@ export class UsersService {
       district: currentUser.district
     });
 
+    // Pasteur Régional : voit tous les pasteurs de groupe, pasteurs de district et responsables de cellule de sa région
+    if (currentUser.role === UserRole.REGIONAL_PASTOR) {
+      query.$or = [
+        // Pasteurs de groupe de la même région
+        {
+          role: UserRole.GROUP_PASTOR,
+          region: currentUser.region
+        },
+        // Pasteurs de district de la même région
+        {
+          role: UserRole.DISTRICT_PASTOR,
+          region: currentUser.region
+        },
+        // Responsables de cellule de la même région
+        {
+          role: UserRole.CELL_LEADER,
+          region: currentUser.region
+        }
+      ];
+    }
     // Pasteur de Groupe : voit tous les pasteurs de district + responsables de cellule de son groupe
-    if (currentUser.role === UserRole.GROUP_PASTOR) {
+    else if (currentUser.role === UserRole.GROUP_PASTOR) {
       query.$or = [
         // Pasteurs de district du même groupe
         {

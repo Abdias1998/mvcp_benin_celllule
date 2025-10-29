@@ -40,6 +40,14 @@ export class ReportsService {
         query.group = user.group;
         query.district = user.district;
         break;
+      case UserRole.CELL_LEADER:
+        // Le responsable de cellule ne voit que les rapports de sa propre cellule
+        query.region = user.region;
+        query.group = user.group;
+        query.district = user.district;
+        query.cellName = user.cellName;
+        query.cellCategory = user.cellCategory;
+        break;
       case UserRole.NATIONAL_COORDINATOR:
       default:
         // No additional filters
