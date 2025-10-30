@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
-    getHierarchy(req: any): Promise<import("./schemas/user.schema").User[]>;
+    getHierarchy(req: any): Promise<any[]>;
     create(createUserDto: CreateUserDto): Promise<import("./schemas/user.schema").UserDocument>;
     findPending(): Promise<import("./schemas/user.schema").User[]>;
     findAll(): Promise<import("./schemas/user.schema").User[]>;

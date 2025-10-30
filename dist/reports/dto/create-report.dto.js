@@ -82,6 +82,11 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
+], CreateReportDto.prototype, "cellName", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
 ], CreateReportDto.prototype, "cellCategory", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
@@ -96,15 +101,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], CreateReportDto.prototype, "registeredMen", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateReportDto.prototype, "registeredWomen", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateReportDto.prototype, "registeredChildren", void 0);
+], CreateReportDto.prototype, "initialMembersCount", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)

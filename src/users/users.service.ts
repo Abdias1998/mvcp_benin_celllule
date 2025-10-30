@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './schemas/user.schema';
+import { Cell, CellDocument } from '../cells/schemas/cell.schema';
 import { PastorData, UserRole } from '../shared/types';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Cell.name) private cellModel: Model<CellDocument>
+  ) {}
 
   async findByEmail(email: string): Promise<UserDocument | null> {
     return this.userModel.findOne({ email: email.toLowerCase() }).exec();
@@ -66,7 +70,7 @@ export class UsersService {
     return this.userModel.findByIdAndDelete(id).exec();
   }
 
-  async getUsersByHierarchy(currentUser: UserDocument): Promise<User[]> {
+  async getUsersByHierarchy(currentUser: UserDocument): Promise<any[]> {
     const query: any = { status: 'approved' };
 
     console.log('🔍 getUsersByHierarchy - Current User:', {
@@ -134,7 +138,44 @@ export class UsersService {
       console.log(`  - ${u.name} (${u.role}) - Region: ${u.region}, Group: ${u.group}, District: ${u.district}`);
     });
 
-    return results;
+    // Enrichir les CELL_LEADER avec initialMembersCount depuis leur cellule
+    const enrichedResults = await Promise.all(results.map(async (user) => {
+      const userObj = user.toObject();
+      
+      if (user.role === UserRole.CELL_LEADER) {
+        console.log(`🔍 Processing CELL_LEADER: ${user.name}`);
+        console.log(`   - cellName: ${user.cellName}`);
+        console.log(`   - region: ${user.region}, group: ${user.group}, district: ${user.district}`);
+        console.log(`   - cellCategory: ${user.cellCategory}`);
+        
+        if (user.cellName) {
+          // Récupérer la cellule correspondante
+          const cell = await this.cellModel.findOne({
+            region: user.region,
+            group: user.group,
+            district: user.district,
+            cellName: user.cellName,
+            cellCategory: user.cellCategory
+          }).exec();
+          
+          if (cell) {
+            console.log(`✅ Found cell with initialMembersCount: ${cell.initialMembersCount}`);
+            (userObj as any).initialMembersCount = cell.initialMembersCount || 0;
+          } else {
+            console.log(`❌ Cell not found for ${user.name}`);
+            console.log(`   Query was: region=${user.region}, group=${user.group}, district=${user.district}, cellName=${user.cellName}, cellCategory=${user.cellCategory}`);
+          }
+        } else {
+          console.log(`⚠️  CELL_LEADER ${user.name} has no cellName defined!`);
+        }
+      }
+      
+      return userObj;
+    }));
+    
+    console.log(`🔍 Returning ${enrichedResults.length} enriched users`);
+
+    return enrichedResults;
   }
 
   /**

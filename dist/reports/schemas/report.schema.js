@@ -96,6 +96,10 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
+], Report.prototype, "cellName", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
 ], Report.prototype, "cellCategory", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
@@ -108,15 +112,7 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ required: true, default: 0 }),
     __metadata("design:type", Number)
-], Report.prototype, "registeredMen", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: true, default: 0 }),
-    __metadata("design:type", Number)
-], Report.prototype, "registeredWomen", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: true, default: 0 }),
-    __metadata("design:type", Number)
-], Report.prototype, "registeredChildren", void 0);
+], Report.prototype, "initialMembersCount", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true, default: 0 }),
     __metadata("design:type", Number)

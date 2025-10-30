@@ -17,11 +17,13 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const user_schema_1 = require("./schemas/user.schema");
+const cell_schema_1 = require("../cells/schemas/cell.schema");
 const types_1 = require("../shared/types");
 const bcrypt = require("bcrypt");
 let UsersService = class UsersService {
-    constructor(userModel) {
+    constructor(userModel, cellModel) {
         this.userModel = userModel;
+        this.cellModel = cellModel;
     }
     async findByEmail(email) {
         return this.userModel.findOne({ email: email.toLowerCase() }).exec();
@@ -119,7 +121,38 @@ let UsersService = class UsersService {
         results.forEach(u => {
             console.log(`  - ${u.name} (${u.role}) - Region: ${u.region}, Group: ${u.group}, District: ${u.district}`);
         });
-        return results;
+        const enrichedResults = await Promise.all(results.map(async (user) => {
+            const userObj = user.toObject();
+            if (user.role === types_1.UserRole.CELL_LEADER) {
+                console.log(`🔍 Processing CELL_LEADER: ${user.name}`);
+                console.log(`   - cellName: ${user.cellName}`);
+                console.log(`   - region: ${user.region}, group: ${user.group}, district: ${user.district}`);
+                console.log(`   - cellCategory: ${user.cellCategory}`);
+                if (user.cellName) {
+                    const cell = await this.cellModel.findOne({
+                        region: user.region,
+                        group: user.group,
+                        district: user.district,
+                        cellName: user.cellName,
+                        cellCategory: user.cellCategory
+                    }).exec();
+                    if (cell) {
+                        console.log(`✅ Found cell with initialMembersCount: ${cell.initialMembersCount}`);
+                        userObj.initialMembersCount = cell.initialMembersCount || 0;
+                    }
+                    else {
+                        console.log(`❌ Cell not found for ${user.name}`);
+                        console.log(`   Query was: region=${user.region}, group=${user.group}, district=${user.district}, cellName=${user.cellName}, cellCategory=${user.cellCategory}`);
+                    }
+                }
+                else {
+                    console.log(`⚠️  CELL_LEADER ${user.name} has no cellName defined!`);
+                }
+            }
+            return userObj;
+        }));
+        console.log(`🔍 Returning ${enrichedResults.length} enriched users`);
+        return enrichedResults;
     }
     async updateResetToken(userId, token, expires) {
         await this.userModel.findByIdAndUpdate(userId, {
@@ -145,6 +178,8 @@ exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)(cell_schema_1.Cell.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], UsersService);
 //# sourceMappingURL=users.service.js.map

@@ -45,12 +45,11 @@ export class Report {
   @Prop({ required: true }) region: string;
   @Prop({ required: true }) group: string;
   @Prop({ required: true }) district: string;
+  @Prop({ required: true }) cellName: string;
   @Prop({ required: true }) cellCategory: string;
   @Prop({ required: true }) leaderName: string;
   @Prop() leaderContact: string;
-  @Prop({ required: true, default: 0 }) registeredMen: number;
-  @Prop({ required: true, default: 0 }) registeredWomen: number;
-  @Prop({ required: true, default: 0 }) registeredChildren: number;
+  @Prop({ required: true, default: 0 }) initialMembersCount: number;
   @Prop({ required: true, default: 0 }) attendees: number;
   @Prop({ required: true, default: 0 }) absentees: number;
   @Prop({ type: [InvitedPersonSchema], default: [] }) invitedPeople: InvitedPerson[];

@@ -17,12 +17,11 @@ export declare class CreateReportDto {
     region: string;
     group: string;
     district: string;
+    cellName: string;
     cellCategory: string;
     leaderName: string;
     leaderContact: string;
-    registeredMen: number;
-    registeredWomen: number;
-    registeredChildren: number;
+    initialMembersCount: number;
     attendees: number;
     absentees: number;
     totalPresent: number;
