@@ -6,15 +6,15 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "ES2021", 
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "public/dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "strictBindCallApply": false,
+    "strictBindCallApply": false, 
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   }
