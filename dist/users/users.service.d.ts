@@ -2,6 +2,7 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { CellDocument } from '../cells/schemas/cell.schema';
 import { PastorData } from '../shared/types';
+import { ReassignUserDto } from './dto/reassign-user.dto';
 export declare class UsersService {
     private userModel;
     private cellModel;
@@ -20,4 +21,5 @@ export declare class UsersService {
     updateResetToken(userId: string, token: string, expires: Date): Promise<void>;
     findByResetToken(token: string): Promise<UserDocument | null>;
     updatePassword(userId: string, hashedPassword: string): Promise<void>;
+    reassignUser(reassignDto: ReassignUserDto): Promise<any>;
 }

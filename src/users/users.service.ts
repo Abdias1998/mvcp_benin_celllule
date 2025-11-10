@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { Cell, CellDocument } from '../cells/schemas/cell.schema';
 import { PastorData, UserRole } from '../shared/types';
+import { ReassignUserDto } from './dto/reassign-user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -207,5 +208,147 @@ export class UsersService {
       resetPasswordToken: undefined,
       resetPasswordExpires: undefined,
     }).exec();
+  }
+
+  /**
+   * Réaffecte un pasteur à un nouveau groupe/district/région
+   * Met à jour automatiquement toutes les cellules et rapports associés
+   */
+  async reassignUser(reassignDto: ReassignUserDto): Promise<any> {
+    const { userId, newRole, newRegion, newGroup, newDistrict } = reassignDto;
+
+    // 1. Récupérer l'utilisateur actuel
+    const user = await this.userModel.findById(userId).exec();
+    if (!user) {
+      throw new Error('Utilisateur non trouvé');
+    }
+
+    console.log('🔄 Réaffectation de l\'utilisateur:', {
+      userId,
+      currentRole: user.role,
+      currentRegion: user.region,
+      currentGroup: user.group,
+      currentDistrict: user.district,
+      newRole,
+      newRegion,
+      newGroup,
+      newDistrict
+    });
+
+    // Sauvegarder les anciennes valeurs pour la mise à jour des cellules
+    const oldRegion = user.region;
+    const oldGroup = user.group;
+    const oldDistrict = user.district;
+    const oldRole = user.role;
+
+    // 2. Préparer les données de mise à jour
+    const updateData: any = {};
+    if (newRole !== undefined) updateData.role = newRole;
+    if (newRegion !== undefined) updateData.region = newRegion;
+    if (newGroup !== undefined) updateData.group = newGroup;
+    if (newDistrict !== undefined) updateData.district = newDistrict;
+
+    // 3. Mettre à jour l'utilisateur
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      userId,
+      updateData,
+      { new: true }
+    ).select('-password').exec();
+
+    console.log('✅ Utilisateur mis à jour:', {
+      name: updatedUser.name,
+      role: updatedUser.role,
+      region: updatedUser.region,
+      group: updatedUser.group,
+      district: updatedUser.district
+    });
+
+    // 4. Mettre à jour les cellules associées selon le rôle
+    let cellsUpdated = 0;
+    
+    if (oldRole === UserRole.GROUP_PASTOR || newRole === UserRole.GROUP_PASTOR) {
+      // Mettre à jour toutes les cellules du groupe
+      const cellQuery: any = {
+        region: oldRegion,
+        group: oldGroup
+      };
+
+      const cellUpdateData: any = {};
+      if (newRegion !== undefined) cellUpdateData.region = newRegion;
+      if (newGroup !== undefined) cellUpdateData.group = newGroup;
+
+      const cellsResult = await this.cellModel.updateMany(
+        cellQuery,
+        { $set: cellUpdateData }
+      ).exec();
+      
+      cellsUpdated = cellsResult.modifiedCount;
+      console.log(`✅ ${cellsUpdated} cellule(s) mise(s) à jour pour le groupe`);
+    } 
+    else if (oldRole === UserRole.DISTRICT_PASTOR || newRole === UserRole.DISTRICT_PASTOR) {
+      // Mettre à jour toutes les cellules du district
+      const cellQuery: any = {
+        region: oldRegion,
+        group: oldGroup,
+        district: oldDistrict
+      };
+
+      const cellUpdateData: any = {};
+      if (newRegion !== undefined) cellUpdateData.region = newRegion;
+      if (newGroup !== undefined) cellUpdateData.group = newGroup;
+      if (newDistrict !== undefined) cellUpdateData.district = newDistrict;
+
+      const cellsResult = await this.cellModel.updateMany(
+        cellQuery,
+        { $set: cellUpdateData }
+      ).exec();
+      
+      cellsUpdated = cellsResult.modifiedCount;
+      console.log(`✅ ${cellsUpdated} cellule(s) mise(s) à jour pour le district`);
+    }
+    else if (oldRole === UserRole.CELL_LEADER) {
+      // Mettre à jour la cellule spécifique du responsable
+      const cellQuery: any = {
+        region: oldRegion,
+        group: oldGroup,
+        district: oldDistrict,
+        cellName: user.cellName,
+        cellCategory: user.cellCategory
+      };
+
+      const cellUpdateData: any = {};
+      if (newRegion !== undefined) cellUpdateData.region = newRegion;
+      if (newGroup !== undefined) cellUpdateData.group = newGroup;
+      if (newDistrict !== undefined) cellUpdateData.district = newDistrict;
+
+      const cellsResult = await this.cellModel.updateMany(
+        cellQuery,
+        { $set: cellUpdateData }
+      ).exec();
+      
+      cellsUpdated = cellsResult.modifiedCount;
+      console.log(`✅ ${cellsUpdated} cellule(s) mise(s) à jour pour le responsable`);
+    }
+
+    return {
+      success: true,
+      message: 'Réaffectation effectuée avec succès',
+      user: updatedUser,
+      cellsUpdated,
+      details: {
+        oldHierarchy: {
+          role: oldRole,
+          region: oldRegion,
+          group: oldGroup,
+          district: oldDistrict
+        },
+        newHierarchy: {
+          role: updatedUser.role,
+          region: updatedUser.region,
+          group: updatedUser.group,
+          district: updatedUser.district
+        }
+      }
+    };
   }
 }

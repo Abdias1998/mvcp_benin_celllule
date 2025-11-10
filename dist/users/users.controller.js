@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const update_user_dto_1 = require("./dto/update-user.dto");
+const reassign_user_dto_1 = require("./dto/reassign-user.dto");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 const roles_guard_1 = require("../auth/guards/roles.guard");
 const roles_decorator_1 = require("../auth/decorators/roles.decorator");
@@ -42,6 +43,9 @@ let UsersController = class UsersController {
     }
     update(id, updateUserDto) {
         return this.usersService.update(id, updateUserDto);
+    }
+    reassign(reassignUserDto) {
+        return this.usersService.reassignUser(reassignUserDto);
     }
     remove(id) {
         return this.usersService.delete(id);
@@ -100,6 +104,15 @@ __decorate([
     __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "update", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(types_1.UserRole.NATIONAL_COORDINATOR),
+    (0, common_1.Post)('reassign'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [reassign_user_dto_1.ReassignUserDto]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "reassign", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(types_1.UserRole.NATIONAL_COORDINATOR),

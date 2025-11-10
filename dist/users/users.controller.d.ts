@@ -1,6 +1,7 @@
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ReassignUserDto } from './dto/reassign-user.dto';
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
@@ -10,5 +11,6 @@ export declare class UsersController {
     findAll(): Promise<import("./schemas/user.schema").User[]>;
     approve(id: string): Promise<import("./schemas/user.schema").User>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<import("./schemas/user.schema").User>;
+    reassign(reassignUserDto: ReassignUserDto): Promise<any>;
     remove(id: string): Promise<any>;
 }
