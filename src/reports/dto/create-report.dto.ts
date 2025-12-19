@@ -74,6 +74,6 @@ export class CreateReportDto {
   actionFutureRecommandee?: string;
   
   @IsOptional()
-  @IsString()
+  @IsNumber()
   offrande?: number;
 }
