@@ -75,5 +75,5 @@ export class CreateReportDto {
   
   @IsOptional()
   @IsString()
-  offrande?: string;
+  offrande?: number;
 }
