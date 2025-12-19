@@ -63,7 +63,12 @@ export class Report {
   @Prop() poignantTestimony?: string;
   @Prop({ type: [PrayerRequestSchema], default: [] }) prayerRequests?: PrayerRequest[];
   @Prop() message: string;
+  @Prop() problemeRencontre: string;
+  @Prop() actionFutureRecommandee: string;
+  @Prop() actionPrise: string;
+  @Prop() offrande: number;
   @Prop({ required: true }) submittedAt: string;
+    
 }
 
 export const ReportSchema = SchemaFactory.createForClass(Report);
