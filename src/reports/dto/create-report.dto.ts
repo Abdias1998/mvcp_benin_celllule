@@ -61,5 +61,19 @@ export class CreateReportDto {
   @Type(() => PrayerRequestDto)
   prayerRequests?: PrayerRequestDto[];
   
-  @IsString() message: string;
+  @IsOptional()
+  @IsString()
+  problemeRencontre?: string;
+  
+  @IsOptional()
+  @IsString()
+  actionPrise?: string;
+  
+  @IsOptional()
+  @IsString()
+  actionFutureRecommandee?: string;
+  
+  @IsOptional()
+  @IsString()
+  offrande?: string;
 }
